@@ -21,5 +21,30 @@ def pow_list(*args, power=2) -> list:
     return result_list
 
 
+def pow_list_input(power=2) -> list:
+    """Return list of powered numbers from user input
+    :param power: power value (int)
+    """
+
+    while True:
+        try:
+            n = int(input('Give a number of integers: '))
+            break
+        except ValueError:
+            print('Give an integer please!')
+
+    arr = []
+    while n > 0:
+        try:
+            arr.append(int(input('Give an integer: ')))
+            n -= 1
+        except ValueError:
+            print('Give an integer please!')
+
+    result_list = [pow(i, power) for i in arr]
+    pprint.pprint(result_list)
+    return result_list
+
+
 if __name__ == '__main__':
     pow_list(1, 'kl', 3, power=8)
