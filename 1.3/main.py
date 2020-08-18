@@ -45,6 +45,31 @@ def pow_list_input(power=2) -> list:
     pprint.pprint(result_list)
     return result_list
 
+# *****************************************************************
+
+
+EVEN = 'even'
+ODD = 'odd'
+PRIME = 'prime'
+
+
+def is_prime(num: int) -> bool:
+    """ Checks whether a given number is prime or not
+    :param num: (int)
+    """
+    if num <= 1:
+        return False
+    if num <= 3:
+        return True
+
+    # Iterate from 2 to n
+    for i in range(2, num):
+        # If num is divisible by any number between 2 and n, it is not prime
+        if (num % i) == 0:
+            return False
+    else:
+        return True
+
 
 if __name__ == '__main__':
     pow_list(1, 'kl', 3, power=8)
