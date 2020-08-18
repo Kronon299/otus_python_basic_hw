@@ -53,6 +53,26 @@ ODD = 'odd'
 PRIME = 'prime'
 
 
+def int_filter(*args, filter_key=None) -> list:
+    """
+    Takes list of integers and only returns even/odd/prime in accordance of filter_key parameter
+    :param filter_key: available values: 'even', 'odd' and 'prime'
+    """
+    if filter_key.lower() == EVEN:
+        # using filter and lambla
+        answer = list(filter(lambda x: (x % 2) != 1, args))
+    elif filter_key.lower() == ODD:
+        # using list comprehension
+        answer = [x for x in args if (x % 2) == 1]
+    elif filter_key.lower() == PRIME:
+        answer = list(filter(is_prime, args))
+    else:
+        answer = []
+        print(f'Wrong filter_key parameter! You need to chose between {EVEN}, {ODD}, and {PRIME}.')
+    pprint.pprint(answer)
+    return answer
+
+
 def is_prime(num: int) -> bool:
     """ Checks whether a given number is prime or not
     :param num: (int)
