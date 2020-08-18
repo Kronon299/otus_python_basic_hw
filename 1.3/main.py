@@ -1,6 +1,8 @@
 import pprint
 
 from operator import pow
+from time import time
+from functools import wraps
 
 
 def pow_list(*args, power=2) -> list:
@@ -53,6 +55,18 @@ ODD = 'odd'
 PRIME = 'prime'
 
 
+def runtime_checker(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        start_time = time()
+        res = func(*args, **kwargs)
+        finish_time = time()
+        print('computed in ', finish_time - start_time)
+        return res
+    return wrapper
+
+
+@runtime_checker
 def int_filter(*args, filter_key=None) -> list:
     """
     Takes list of integers and only returns even/odd/prime in accordance of filter_key parameter
@@ -92,4 +106,5 @@ def is_prime(num: int) -> bool:
 
 
 if __name__ == '__main__':
-    pow_list(1, 'kl', 3, power=8)
+    int_filter(1, 3, 2, 4, 2, 3, 5, 7, 11, filter_key='even')
+    # print(is_prime(4))
