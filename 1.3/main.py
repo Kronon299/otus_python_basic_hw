@@ -107,6 +107,29 @@ def is_prime(num: int) -> bool:
 #     *******************************************************************
 
 
+def trace(ind: str):
+    """
+    Trace calls made to the decorated function.
+    """
+    def decorator(func):
+        lvl_count = 0
+
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            nonlocal lvl_count
+            print(f'{ind*lvl_count} --> {func.__name__}({args[0]})')
+            lvl_count += 1
+            res = func(*args, **kwargs)
+            lvl_count -= 1
+            print(f'{ind*lvl_count} <-- {func.__name__}({args[0]}) == {res}')
+
+            return res
+
+        return wrapper
+    return decorator
+
+
+@trace("____")
 def fib(x):
     """Return fibonacci of x, where x is a non-negative int"""
     if x == 0 or x == 1:
