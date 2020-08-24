@@ -18,7 +18,7 @@ def pow_list(*args, power=2) -> list:
             print(i, ' is not an integer, missed')
     for _ in range(len(arr)):
         power_list.append(power)
-    result_list = list(map(pow, power_list, arr))
+    result_list = list(map(pow, arr, power_list))
     pprint.pprint(result_list)
     return result_list
 
