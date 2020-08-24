@@ -139,5 +139,8 @@ def fib(x):
 
 
 if __name__ == '__main__':
-    # int_filter(1, 3, 2, 4, 2, 3, 5, 7, 11, filter_key='even')
-    # print(is_prime(4))
+    pow_list(1, 2, 3, 7, power=3)
+    # pow_list_input(3)
+    int_filter(1, 3, 2, 4, 2, 3, 5, 7, 11, filter_key='even')
+    print(is_prime(4))
+    fib(3)
