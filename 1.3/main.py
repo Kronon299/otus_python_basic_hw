@@ -1,4 +1,4 @@
-import pprint
+from pprint import pprint
 
 from operator import pow
 from time import time
@@ -19,7 +19,6 @@ def pow_list(*args, power=2) -> list:
     for _ in range(len(arr)):
         power_list.append(power)
     result_list = list(map(pow, arr, power_list))
-    pprint.pprint(result_list)
     return result_list
 
 
@@ -44,7 +43,6 @@ def pow_list_input(power=2) -> list:
             print('Give an integer please!')
 
     result_list = [pow(i, power) for i in arr]
-    pprint.pprint(result_list)
     return result_list
 
 # *****************************************************************
@@ -83,7 +81,6 @@ def int_filter(*args, filter_key=None) -> list:
     else:
         answer = []
         print(f'Wrong filter_key parameter! You need to chose between {EVEN}, {ODD}, and {PRIME}.')
-    pprint.pprint(answer)
     return answer
 
 
@@ -139,8 +136,8 @@ def fib(x):
 
 
 if __name__ == '__main__':
-    pow_list(1, 2, 3, 7, power=3)
+    pprint(pow_list(1, 2, 3, 7, power=3))
     # pow_list_input(3)
-    int_filter(1, 3, 2, 4, 2, 3, 5, 7, 11, filter_key='even')
-    print(is_prime(4))
+    pprint(int_filter(1, 3, 2, 4, 2, 3, 5, 7, 11, filter_key='even'))
+    pprint(is_prime(3))
     fib(3)
