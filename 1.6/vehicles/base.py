@@ -24,7 +24,6 @@ class BaseCar(BaseVehicle, metaclass=ABCMeta):
 
     @abstractmethod
     def ride(self, distance):
-        # raise NotImplementedError
         pass
 
 
@@ -37,7 +36,6 @@ class BaseShip(BaseVehicle, metaclass=ABCMeta):
 
     @abstractmethod
     def sail(self, distance):
-        # raise NotImplementedError
         pass
 
 

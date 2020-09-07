@@ -1,1 +1,1 @@
-from . import base, passenger_car
+from . import base, passenger_car, ferry_boat

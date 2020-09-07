@@ -60,3 +60,19 @@ class FerryBoat(BaseShip):
         print(f'{self.name} was offloaded')
         self.cargo = 0
         self.__consumption_index = 1
+
+
+if __name__ == '__main__':
+    ship = FerryBoat('Syma', 'Black Stealth', 'Queen')
+    ship.make_sound()
+    print("ship.fuel: ", ship.fuel)
+    ship.add_fuel(-600)
+    print("ship.fuel: ", ship.fuel)
+    ship.add_fuel(550)
+    print("ship.fuel: ", ship.fuel)
+    ship.sail(250)
+    print(ship._FerryBoat__consumption_index)
+    ship.bring_cargo(4000)
+    print(f"ship.cargo: {ship.cargo}, consumption index: {ship._FerryBoat__consumption_index}")
+    ship.offload()
+    print(f"ship.cargo: {ship.cargo}, consumption index: {ship._FerryBoat__consumption_index}")
