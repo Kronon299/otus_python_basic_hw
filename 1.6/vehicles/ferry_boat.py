@@ -7,6 +7,8 @@ class FerryBoat(BaseShip):
     PAYLOAD = 10000
     FUEL_CONSUMPTION = 10
     MAX_FUEL = 6000
+    __consumption_index = 1
+    cargo = 0
 
     def __init__(self, *args, fuel=MAX_FUEL, **kwargs):
         super().__init__(*args, **kwargs)
@@ -31,7 +33,7 @@ class FerryBoat(BaseShip):
             self.__fuel = value
 
     def sail(self, distance: int) -> None:
-        fuel_to_spend = distance * self.FUEL_CONSUMPTION
+        fuel_to_spend = distance * self.FUEL_CONSUMPTION * self.__consumption_index
         if fuel_to_spend > self.fuel:
             print(f"Cannot go, not enough fuel {self.fuel}, need {fuel_to_spend}")
             return
@@ -45,3 +47,16 @@ class FerryBoat(BaseShip):
             print("lost", self.fuel - self.MAX_FUEL, "of fuel")
             self.fuel = self.MAX_FUEL
         return self.fuel
+
+    def bring_cargo(self, cargo: int):
+        self.cargo += cargo
+        if self.cargo > self.PAYLOAD:
+            print("can't bring so heavy cargo!")
+            return
+        print(f'Bringing {cargo} on board. Total cargo: {self.cargo}')
+        self.__consumption_index += 0.001 * cargo
+
+    def offload(self):
+        print(f'{self.name} was offloaded')
+        self.cargo = 0
+        self.__consumption_index = 1
