@@ -1,4 +1,5 @@
 from base import BaseShip
+from vehicles_exceptions import LowFuelError, PositiveValueError
 
 
 class FerryBoat(BaseShip):
@@ -33,12 +34,14 @@ class FerryBoat(BaseShip):
             self.__fuel = value
 
     def sail(self, distance: int) -> None:
-        fuel_to_spend = distance * self.FUEL_CONSUMPTION * self.__consumption_index
-        if fuel_to_spend > self.fuel:
-            print(f"Cannot go, not enough fuel {self.fuel}, need {fuel_to_spend}")
-            return
-        self.fuel -= fuel_to_spend
-        print(f"Going {distance} units. Was spent {fuel_to_spend} of fuel, left {self.fuel} of fuel")
+        try:
+            fuel_to_spend = distance * self.FUEL_CONSUMPTION * self.__consumption_index
+            if fuel_to_spend > self.fuel:
+                raise LowFuelError(self.fuel, fuel_to_spend)
+            self.fuel -= fuel_to_spend
+            print(f"Going {distance} units. Was spent {fuel_to_spend} of fuel, left {self.fuel} of fuel")
+        except LowFuelError as err:
+            print(f"Can't go. Fuel: {err.args[0]}, need {err.args[1]}")
 
     def add_fuel(self, value):
         print("Adding", value, "of fuel")
@@ -49,12 +52,18 @@ class FerryBoat(BaseShip):
         return self.fuel
 
     def bring_cargo(self, cargo: int):
-        self.cargo += cargo
-        if self.cargo > self.PAYLOAD:
-            print("can't bring so heavy cargo!")
-            return
-        print(f'Bringing {cargo} on board. Total cargo: {self.cargo}')
-        self.__consumption_index += 0.001 * cargo
+        try:
+            self.cargo += cargo
+            if self.cargo < 0:
+                raise PositiveValueError(self.cargo)
+            if self.cargo > self.PAYLOAD:
+                print("can't bring so heavy cargo!")
+                return
+            print(f'Bringing {cargo} on board. Total cargo: {self.cargo}')
+            self.__consumption_index += 0.001 * cargo
+        except PositiveValueError as err:
+            self.cargo = 0
+            print(err.__str__())
 
     def offload(self):
         print(f'{self.name} was offloaded')
@@ -70,9 +79,9 @@ if __name__ == '__main__':
     print("ship.fuel: ", ship.fuel)
     ship.add_fuel(550)
     print("ship.fuel: ", ship.fuel)
-    ship.sail(250)
+    ship.sail(2500)
     print(ship._FerryBoat__consumption_index)
-    ship.bring_cargo(4000)
+    ship.bring_cargo(-5000)
     print(f"ship.cargo: {ship.cargo}, consumption index: {ship._FerryBoat__consumption_index}")
     ship.offload()
     print(f"ship.cargo: {ship.cargo}, consumption index: {ship._FerryBoat__consumption_index}")

@@ -1,4 +1,5 @@
 from base import BaseCar
+from vehicles_exceptions import PositiveValueError, LowFuelError
 
 
 class PassengerCar(BaseCar):
@@ -31,12 +32,14 @@ class PassengerCar(BaseCar):
             self.__fuel = value
 
     def ride(self, distance: int) -> None:
-        fuel_to_spend = distance * self.FUEL_CONSUMPTION
-        if fuel_to_spend > self.fuel:
-            print(f"Cannot go, not enough fuel {self.fuel}, need {fuel_to_spend}")
-            return
-        self.fuel -= fuel_to_spend
-        print(f"Going {distance} units. Was spent {fuel_to_spend} of fuel, left {self.fuel} of fuel")
+        try:
+            fuel_to_spend = distance * self.FUEL_CONSUMPTION
+            if fuel_to_spend > self.fuel:
+                raise LowFuelError(self.fuel, fuel_to_spend)
+            self.fuel -= fuel_to_spend
+            print(f"Going {distance} units. Was spent {fuel_to_spend} of fuel, left {self.fuel} of fuel")
+        except LowFuelError as err:
+            print(f"Can't go. Fuel: {err.args[0]}, need {err.args[1]}")
 
     def add_fuel(self, value):
         print("Adding", value, "of fuel")
@@ -55,4 +58,4 @@ if __name__ == '__main__':
     print("car.fuel: ", car.fuel)
     car.add_fuel(550)
     print("car.fuel: ", car.fuel)
-    car.ride(450)
+    car.ride(6000)
