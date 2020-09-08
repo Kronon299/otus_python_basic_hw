@@ -1,6 +1,6 @@
 from base import BaseCar
 from vehicles_exceptions import LowFuelError
-from parts import Engine, base_engine, sport_engine
+from parts import Engine, base_engine, sport_engine, base_horn
 
 
 class PassengerCar(BaseCar):
@@ -10,6 +10,7 @@ class PassengerCar(BaseCar):
     FUEL_CONSUMPTION = 1
     MAX_FUEL = 750
     engine = base_engine
+    horn = base_horn
 
     def __init__(self, *args, fuel=MAX_FUEL, **kwargs):
         super().__init__(*args, **kwargs)
@@ -21,6 +22,9 @@ class PassengerCar(BaseCar):
 
     def __repr__(self):
         return str(self)
+
+    def make_sound(self):
+        print(self.horn.sound)
 
     @property
     def fuel(self):
