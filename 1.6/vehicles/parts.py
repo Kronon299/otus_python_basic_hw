@@ -18,6 +18,17 @@ base_engine = Engine()
 sport_engine = Engine(max_speed=250, consumption_index=1.5)
 
 
+@dataclass(frozen=True)
+class Horn:
+    """Class for horns"""
+    name: str = 'base horn'
+    sound: str = 'Beep!'
+
+
+base_horn = Horn()
+loud_horn = Horn(name='Loud horn', sound='BEEEP!!')
+
+
 if __name__ == '__main__':
     print(base_engine)
     print(sport_engine)
