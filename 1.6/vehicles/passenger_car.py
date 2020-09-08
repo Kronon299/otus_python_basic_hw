@@ -1,5 +1,6 @@
 from base import BaseCar
-from vehicles_exceptions import PositiveValueError, LowFuelError
+from vehicles_exceptions import LowFuelError
+from parts import Engine, base_engine, sport_engine
 
 
 class PassengerCar(BaseCar):
@@ -7,7 +8,8 @@ class PassengerCar(BaseCar):
     WEIGHT = 3000
     PAYLOAD = 1000
     FUEL_CONSUMPTION = 1
-    MAX_FUEL = 500
+    MAX_FUEL = 750
+    engine = base_engine
 
     def __init__(self, *args, fuel=MAX_FUEL, **kwargs):
         super().__init__(*args, **kwargs)
@@ -33,11 +35,14 @@ class PassengerCar(BaseCar):
 
     def ride(self, distance: int) -> None:
         try:
-            fuel_to_spend = distance * self.FUEL_CONSUMPTION
+            fuel_to_spend = distance * self.FUEL_CONSUMPTION * self.engine.consumption_index
             if fuel_to_spend > self.fuel:
                 raise LowFuelError(self.fuel, fuel_to_spend)
             self.fuel -= fuel_to_spend
-            print(f"Going {distance} units. Was spent {fuel_to_spend} of fuel, left {self.fuel} of fuel")
+            real_speed = self.engine.real_speed(self.PAYLOAD)
+            print(f"Going {distance} units. Was spent {fuel_to_spend} of fuel, left {self.fuel} of fuel. \n"
+                  f"Speed: {real_speed}.\n"
+                  f"Journey takes {distance/real_speed} hours.")
         except LowFuelError as err:
             print(f"Can't go. Fuel: {err.args[0]}, need {err.args[1]}")
 
@@ -49,6 +54,12 @@ class PassengerCar(BaseCar):
             self.fuel = self.MAX_FUEL
         return self.fuel
 
+    def set_engine(self, obj=None, *args, **kwargs):
+        if not obj:
+            self.engine = Engine(*args, **kwargs)
+        else:
+            self.engine = obj
+
 
 if __name__ == '__main__':
     car = PassengerCar('Opel', 'Astra')
@@ -56,6 +67,10 @@ if __name__ == '__main__':
     print("car.fuel: ", car.fuel)
     car.add_fuel(-600)
     print("car.fuel: ", car.fuel)
-    car.add_fuel(550)
+    car.add_fuel(650)
     print("car.fuel: ", car.fuel)
-    car.ride(6000)
+    car.ride(500)
+    car.set_engine(sport_engine)
+    print(car.engine)
+    car.add_fuel(750)
+    car.ride(500)
