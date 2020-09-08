@@ -1,5 +1,5 @@
 from base import BaseShip
-from parts import Engine, base_engine, sport_engine
+from parts import Engine, base_engine, sport_engine, loud_horn
 from vehicles_exceptions import LowFuelError, PositiveValueError
 
 
@@ -12,6 +12,7 @@ class FerryBoat(BaseShip):
     _cargo_consumption_index = 1
     cargo = 0
     engine = base_engine
+    horn = loud_horn
 
     def __init__(self, *args, fuel=MAX_FUEL, **kwargs):
         super().__init__(*args, **kwargs)
@@ -23,6 +24,9 @@ class FerryBoat(BaseShip):
 
     def __repr__(self):
         return str(self)
+
+    def make_sound(self):
+        print(self.horn.sound)
 
     @property
     def fuel(self):
