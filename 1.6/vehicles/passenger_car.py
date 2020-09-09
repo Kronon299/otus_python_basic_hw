@@ -4,6 +4,7 @@ from parts import Engine, base_engine, sport_engine, base_horn
 
 
 class PassengerCar(BaseCar):
+    """Class for passenger cars"""
 
     WEIGHT = 3000
     PAYLOAD = 1000

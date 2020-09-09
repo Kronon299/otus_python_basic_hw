@@ -4,6 +4,7 @@ from vehicles_exceptions import LowFuelError, PositiveValueError
 
 
 class FerryBoat(BaseShip):
+    """Class for ferries"""
 
     WEIGHT = 20000
     PAYLOAD = 10000
