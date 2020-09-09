@@ -4,7 +4,7 @@ from dataclasses import dataclass
 @dataclass(frozen=True)
 class Engine:
     """Class for engines."""
-    type: str = 'diesel'
+    type: str = 'base engine'
     max_speed: int = 100
     consumption_index: float = 1
 
@@ -15,7 +15,7 @@ class Engine:
 
 
 base_engine = Engine()
-sport_engine = Engine(max_speed=250, consumption_index=1.5)
+sport_engine = Engine(type='sport engine', max_speed=250, consumption_index=1.5)
 
 
 @dataclass(frozen=True)
