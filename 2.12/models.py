@@ -3,7 +3,7 @@ from tortoise.models import Model
 
 
 class User(Model):
-    id = fields.IntField(pk=True)
+    id = fields.IntField(pk=True, generated=False)
     name = fields.CharField(db_index=True, max_length=255)
     username = fields.CharField(db_index=True, max_length=255, unique=True)
     email = fields.CharField(db_index=True, max_length=255, unique=True)
@@ -17,7 +17,7 @@ class User(Model):
 
 
 class Post(Model):
-    id = fields.IntField(pk=True)
+    id = fields.IntField(pk=True, generated=False)
     title = fields.CharField(db_index=True, max_length=255)
     body = fields.TextField()
     user_id: fields.ForeignKeyRelation[User] = fields.ForeignKeyField(
