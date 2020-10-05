@@ -50,16 +50,27 @@ async def get_data(source: Source) -> tuple:
     async with ClientSession() as session:
         result = await fetch(session, source.url)
 
-    logger.info("Got result for {}, result {}", source.name, result)
+    # logger.info("Got result for {}, result {}", source.name, result)
     return source.name, result
 
 
 async def write_data():
-    res = await asyncio.wait(
+    done, pending = await asyncio.wait(
         [get_data(s) for s in SOURCES],
-        timeout=5
+        timeout=5,
+        return_when=asyncio.ALL_COMPLETED,
     )
-    # print(res)
+    for s in done:
+        res = s.result()
+        print(s.result()[0])
+        if res[0] == 'users':
+            print(len(res[1]))
+            for i in range(len(res[1])):
+                print(res[1][i])
+        elif res[0] == 'posts':
+            pass
+        elif res[0] == 'comments':
+            pass
 
 
 if __name__ == '__main__':
