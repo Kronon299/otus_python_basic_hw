@@ -1,0 +1,5 @@
+asyncio~=3.4.3
+aiohttp~=3.6.2
+loguru~=0.5.3
+asyncpg~=0.21.0
+tortoise-orm~=0.16.16
