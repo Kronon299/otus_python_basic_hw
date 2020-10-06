@@ -12,7 +12,7 @@ async def init():
     #  also specify the app name of "models"
     #  which contain models from "models"
     await Tortoise.init(
-        db_url='postgres://odoo:odoo@172.57.0.4:5432/database_1',
+        db_url='postgres://odoo:odoo@172.58.0.4:5432/database_1',
         modules={'models': ['models']}
     )
     # Generate the schema
@@ -55,24 +55,54 @@ async def get_data(source: Source) -> tuple:
 
 
 async def write_data():
-    done, pending = await asyncio.wait(
+    await init()
+    done, _ = await asyncio.wait(
         [get_data(s) for s in SOURCES],
         timeout=5,
         return_when=asyncio.ALL_COMPLETED,
     )
     for s in done:
         res = s.result()
-        print(s.result()[0])
         if res[0] == 'users':
-            print(len(res[1]))
-            for i in range(len(res[1])):
-                print(res[1][i])
+            await user_writer(res[1])
         elif res[0] == 'posts':
-            pass
+            await post_writer(res[1])
         elif res[0] == 'comments':
-            pass
+            await comment_writer(res[1])
+
+
+async def user_writer(data: list):
+    for user in data:
+        await models.User.create(
+            id=user['id'],
+            name=user['name'],
+            username=user['username'],
+            email=user['email'],
+        )
+
+
+async def post_writer(data: list):
+    for post in data:
+        await models.Post.create(
+            id=post['id'],
+            title=post['title'],
+            body=post['body'],
+            user_id_id=post['userId'],
+        )
+
+
+async def comment_writer(data: list):
+    for comment in data:
+        await models.Comment.create(
+            id=comment['id'],
+            name=comment['name'],
+            email=comment['email'],
+            body=comment['body'],
+            post_id_id=comment['postId'],
+        )
 
 
 if __name__ == '__main__':
-    # run_async(init())
+    run_async(init())
     run_async(write_data())
+
