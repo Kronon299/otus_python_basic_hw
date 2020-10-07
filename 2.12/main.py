@@ -2,7 +2,6 @@ from tortoise import Tortoise, run_async
 import asyncio
 from dataclasses import dataclass
 from aiohttp import ClientSession
-from loguru import logger
 
 import models
 
@@ -12,7 +11,7 @@ async def init():
     #  also specify the app name of "models"
     #  which contain models from "models"
     await Tortoise.init(
-        db_url='postgres://odoo:odoo@172.58.0.4:5432/database_1',
+        db_url='sqlite://db.sqlite3',
         modules={'models': ['models']}
     )
     # Generate the schema
@@ -49,20 +48,23 @@ async def get_data(source: Source) -> tuple:
     """
     async with ClientSession() as session:
         result = await fetch(session, source.url)
-
-    # logger.info("Got result for {}, result {}", source.name, result)
     return source.name, result
 
 
 async def write_data():
     await init()
-    done, _ = await asyncio.wait(
-        [get_data(s) for s in SOURCES],
-        timeout=5,
-        return_when=asyncio.ALL_COMPLETED,
-    )
-    for s in done:
-        res = s.result()
+    # done, _ = await asyncio.wait(
+    #     [get_data(s) for s in SOURCES],
+    #     timeout=5,
+    #     return_when=asyncio.ALL_COMPLETED,
+    # )
+    done = []
+    for s in SOURCES:
+        data = await get_data(s)
+        done.append(data)
+    print(done)
+    for res in done:
+        # res = s.result()
         if res[0] == 'users':
             await user_writer(res[1])
         elif res[0] == 'posts':
