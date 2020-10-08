@@ -51,13 +51,29 @@ async def get_data(source: Source) -> tuple:
     return source.name, result
 
 
+"""
+# these func will work for models without relations
+
 async def write_data():
     await init()
-    # done, _ = await asyncio.wait(
-    #     [get_data(s) for s in SOURCES],
-    #     timeout=5,
-    #     return_when=asyncio.ALL_COMPLETED,
-    # )
+    done, _ = await asyncio.wait(
+        [get_data(s) for s in SOURCES],
+        timeout=5,
+        return_when=asyncio.ALL_COMPLETED,
+    )
+    for s in done:
+        res = s.result()
+        if res[0] == 'users':
+            await user_writer(res[1])
+        elif res[0] == 'posts':
+            await post_writer(res[1])
+        elif res[0] == 'comments':
+            await comment_writer(res[1])
+"""
+
+
+async def write_data():
+    await init()
     done = []
     for s in SOURCES:
         data = await get_data(s)
