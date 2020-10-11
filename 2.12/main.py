@@ -52,7 +52,7 @@ async def get_data(source: Source) -> tuple:
     return source.name, result
 
 
-async def write_data_fast():
+async def write_data_1():
     await init()
     done, _ = await asyncio.wait(
         [get_data(s) for s in SOURCES],
@@ -60,22 +60,22 @@ async def write_data_fast():
         return_when=asyncio.ALL_COMPLETED,
     )
     i = 0
-    while i == 3:
+    while i < 3:
         if i == 0:
-            for s in done:
-                if s.result()[0] == 'users':
-                    await user_writer(s.result()[1])
-                    i += 1
+            await writer_caller(done, name='users', writer_func=user_writer)
+            i += 1
         if i == 1:
-            for s in done:
-                if s.result()[0] == 'posts':
-                    await post_writer(s.result()[1])
-                    i += 1
+            await writer_caller(done, name='posts', writer_func=post_writer)
+            i += 1
         if i == 2:
-            for s in done:
-                if s.result()[0] == 'comments':
-                    await comment_writer(s.result()[1])
-                    i += 1
+            await writer_caller(done, name='comments', writer_func=comment_writer)
+            i += 1
+
+
+async def writer_caller(done: set, name: str, writer_func):
+    for s in done:
+        if s.result()[0] == name:
+            await writer_func(s.result()[1])
 
 
 async def write_data():
@@ -127,6 +127,6 @@ async def comment_writer(data: list):
 if __name__ == '__main__':
     start_time = time()
     run_async(init())
-    run_async(write_data_fast())
+    run_async(write_data_1())
     print(f'total time: {time() - start_time}')
 
