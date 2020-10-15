@@ -5,5 +5,13 @@ Tasks
 {%- endblock %}
 
 {% block body -%}
-Task List
+<h1>Task List</h1>
+<div>
+    <ul>
+       {% for task_id in tasks %}
+        <li>{{ tasks[task_id] }}</li>
+        {% endfor %}
+    </ul>
+
+</div>
 {%- endblock %}
