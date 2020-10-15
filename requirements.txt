@@ -3,3 +3,9 @@ aiohttp~=3.6.2
 loguru~=0.5.3
 asyncpg~=0.21.0
 tortoise-orm~=0.16.16
+click==7.1.2
+Flask==1.1.2
+itsdangerous==1.1.0
+Jinja2==2.11.2
+MarkupSafe==1.1.1
+Werkzeug==1.0.1
