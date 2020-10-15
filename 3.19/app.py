@@ -8,4 +8,4 @@ app.register_blueprint(task_list_app, url_prefix="/task_list")
 
 @app.route("/", methods=["GET", "POST"])
 def index_view():
-    return "Hello world!"
+    return "Welcome to Task List app!"

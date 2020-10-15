@@ -1,13 +1,13 @@
 from flask import Blueprint, render_template
 from werkzeug.exceptions import BadRequest
 
-task_list_app = Blueprint("product_app", __name__)
+task_list_app = Blueprint("task_list_app", __name__)
 
 
 TASKS = {
     1: 'Помыть посуду',
     2: 'Вынести мусор',
-    3: 'Сходить в магазин',
+    3: 'Сходить в магазин'
 }
 
 
@@ -22,4 +22,8 @@ def task_detail(task_id: int):
         task_name = TASKS[task_id]
     except KeyError:
         raise BadRequest(f'Invalid task id #{task_id}!')
-    return task_name
+    return render_template(
+        "task_list/detail.html",
+        task_id=task_id,
+        task_name=task_name,
+    )

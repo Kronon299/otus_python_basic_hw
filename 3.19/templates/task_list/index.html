@@ -9,7 +9,11 @@ Tasks
 <div>
     <ul>
        {% for task_id in tasks %}
-        <li>{{ tasks[task_id] }}</li>
+        <li>
+            <a href="{{ url_for('task_list_app.task_detail', task_id=task_id) }}">
+                {{ tasks[task_id] }}
+            </a>
+        </li>
         {% endfor %}
     </ul>
 
