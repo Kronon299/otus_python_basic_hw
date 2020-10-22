@@ -6,8 +6,6 @@ Tasks #{{task_id}}
 
 {% block body -%}
 <h1>Task: <span id="task-name">{{task_name}}</span></h1>
-<hr>
-<a href="{{ url_for('task_list_app.task_list') }}">Task List</a>
 {%- endblock %}
 {% block scripts %}
     <script>

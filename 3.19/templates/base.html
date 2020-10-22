@@ -15,11 +15,22 @@
     </title>
 </head>
 <body>
+<div style="height: 100vh;">
+    <div class="container p-3 mb-2 bg-light text-dark h-100">
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('index_view') }}">Index</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('task_list_app.task_list') }}">Task List</a>
+            </li>
+        </ul>
+        <hr>
 
-<div class="container">
-    {% block body %}
-        Base page
-    {% endblock %}
+        {% block body %}
+            Base page
+        {% endblock %}
+    </div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
