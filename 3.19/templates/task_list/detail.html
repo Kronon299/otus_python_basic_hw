@@ -6,12 +6,29 @@ Tasks #{{task_id}}
 
 {% block body -%}
 <h1>Task: <span id="task-name">{{task_name}}</span></h1>
+    <button id="task-done" class="btn btn-success">Готово!</button>
 {%- endblock %}
 {% block scripts %}
     <script>
     $(function() {
         const name = $('#task-name')
         console.log(name.text())
+
+        $('#task-done').click(function() {
+            $.ajax({
+                method: 'DELETE',
+                success: function (res) {
+                    console.log(res)
+                    console.log(res.data)
+                },
+                error: function (err) {
+                    console.log(err)
+                },
+                complete: function () {
+                    window.location = '{{ url_for('task_list_app.task_list') }}'
+                }
+            })
+        })
     });
     </script>
 {% endblock %}
