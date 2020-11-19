@@ -7,6 +7,8 @@ authors = ["Stas_Klimovich <stasklimovich299@gmail.com>"]
 [tool.poetry.dependencies]
 python = "^3.8"
 Flask = "^1.1.2"
+Flask-SQLAlchemy = "^2.4.4"
+Flask-Migrate = "^2.5.3"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
