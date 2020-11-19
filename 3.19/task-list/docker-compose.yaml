@@ -1,0 +1,14 @@
+version: '3.5'
+
+services:
+  pg:
+    image: postgres:12
+    environment:
+      POSTGRES_DB: task-list
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: user
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+    - ./data/pgdata:/var/lib/postgresql/data/pgdata
+    ports:
+    - 5442:5432
