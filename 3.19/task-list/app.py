@@ -1,8 +1,8 @@
 from flask import Flask, render_template
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
-from views import task_list_app
-import config
+from .views import task_list_app
+from . import config
 
 app = Flask(__name__)
 app.config.update(
