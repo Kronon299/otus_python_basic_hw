@@ -7,4 +7,4 @@ class Task(db.Model):
 
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
-    is_done = Column(Boolean, default=False)
+    is_done = Column(Boolean, nullable=False, default=False)
