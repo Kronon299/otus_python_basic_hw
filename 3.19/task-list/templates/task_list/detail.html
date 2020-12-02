@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 
 {% block title -%}
-Tasks #{{task_id}}
+Tasks #{{task.id}}
 {%- endblock %}
 
 {% block body -%}
-<h1>Task: <span id="task-name">{{task_name}}</span></h1>
+<h1>Task: <span id="task-name">{{task.name}}</span></h1>
     <button id="task-done" class="btn btn-success">Готово!</button>
 {%- endblock %}
 {% block scripts %}
