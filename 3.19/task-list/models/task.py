@@ -8,3 +8,4 @@ class Task(db.Model):
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
     is_done = Column(Boolean, nullable=False, default=False)
+    deleted = Column(Boolean, nullable=False, default=False, server_default='false')
