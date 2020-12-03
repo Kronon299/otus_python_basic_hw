@@ -1,5 +1,6 @@
 from flask import Flask, render_template
 from flask_migrate import Migrate
+from flask_bootstrap import Bootstrap
 
 from views import task_list_app
 import config
@@ -11,6 +12,7 @@ app.config.update(
     SECRET_KEY="powerful_secret_key",
     WTF_CSRF_SECRET_KEY="a_csrf_secret_key"
 )
+Bootstrap(app)
 app.register_blueprint(task_list_app, url_prefix="/task_list")
 
 db.init_app(app)
