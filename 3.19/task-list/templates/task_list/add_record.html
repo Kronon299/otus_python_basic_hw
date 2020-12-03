@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title -%}
+Add a New Task
+{%- endblock %}
+
+{% block body -%}
+        {% if message %}
+
+        <!-- the form was submitted and message exists -->
+        <p class="lead"><strong>{{ message }}</strong></p>
+            <br>
+
+        <!-- links -->
+        <p><a href="{{ url_for('task_list_app.add_task') }}">Submit another task</a></p>
+
+    {% else %}
+        <!-- the form is displayed when template opens via GET not POST -->
+        <h1 class="lead">Add a new task</h1>
+
+        {% with errors = get_flashed_messages() %}
+            {% if errors %}
+                {% for err in errors %}
+                <div class="alert alert-danger alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    {{ err }}
+                </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <!-- end of flash -->
+
+        <!-- the quick form -->
+{#        {{ wtf.quick_form(task_form) }}#}
+
+        <!-- the customized form -->
+            <br>
+            <div class="card-body">
+            <form action="" method="post" class="form" role="form">
+            {{ task_form.csrf_token() }}
+            <div class="row">
+                {{ wtf.form_field(task_form.name, class='form-control', placeholder='Task name') }}
+            </div>
+            <button id="add-task" class="btn btn-primary">Submit</button>
+            </form>
+            </div>
+
+    {% endif %}
+
+{% endblock %}
