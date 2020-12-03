@@ -1,6 +1,19 @@
 version: '3.5'
 
 services:
+  web:
+    build:
+      dockerfile: ./Dockerfile
+      context: .
+    environment:
+      PG_HOST: pg
+    container_name: task_web
+    depends_on:
+      - pg
+    volumes:
+      - ./task-list:/app
+    ports:
+      - 5000:5000
   pg:
     image: postgres:12
     environment:
@@ -11,4 +24,4 @@ services:
     volumes:
     - ./data/pgdata:/var/lib/postgresql/data/pgdata
     ports:
-    - 5442:5432
+    - 5432:5432

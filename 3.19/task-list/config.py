@@ -1,1 +1,5 @@
-SQLALCHEMY_DATABASE_URI = "postgres+psycopg2://user:user@0.0.0.0:5442/task-list"
+import os
+
+PG_HOST = os.environ["PG_HOST"]
+
+SQLALCHEMY_DATABASE_URI = f"postgres+psycopg2://user:user@{PG_HOST}:5432/task-list"
