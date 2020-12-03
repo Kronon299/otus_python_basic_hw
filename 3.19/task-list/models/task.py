@@ -10,3 +10,6 @@ class Task(db.Model):
     name = Column(String, nullable=False)
     is_done = Column(Boolean, nullable=False, default=False)
     deleted = Column(Boolean, nullable=False, default=False, server_default='false')
+
+    def __init__(self, name):
+        self.name = name
