@@ -12,8 +12,11 @@ Tasks
                 {% for task in tasks %}
                     <li class="task-item list-group-item">
                         <a href="{{ url_for('task_list_app.task_detail', task_id=task.id) }}">
-                            {{ task.name }}
+                            {{ task.name -}}
                         </a>
+                    {% if task.deleted %}
+                        <span class="badge badge-secondary">Done!</span>
+                    {% endif %}
                     </li>
                 {% endfor %}
             </ul>

@@ -8,7 +8,7 @@ task_list_app = Blueprint("task_list_app", __name__)
 
 @task_list_app.route("/")
 def task_list():
-    tasks = Task.query.filter_by(deleted=False).all()
+    tasks = Task.query.all()
     return render_template("task_list/index.html", tasks=tasks)
 
 
