@@ -8,6 +8,8 @@ from models import db
 app = Flask(__name__)
 app.config.update(
     SQLALCHEMY_DATABASE_URI=config.SQLALCHEMY_DATABASE_URI,
+    SECRET_KEY="powerful_secret_key",
+    WTF_CSRF_SECRET_KEY="a_csrf_secret_key"
 )
 app.register_blueprint(task_list_app, url_prefix="/task_list")
 
