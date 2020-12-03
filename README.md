@@ -12,6 +12,6 @@ Stanislau Klimovich, Minsk
 ##### 3.19 - First Web App (Flask)
 run folowing commands to start the task-list project:
  ```
-    docker build -t task-list .
-    docker run --rm -p 5000:5000 task-list
+    docker-compose build 
+    docker-compose up
 ```  
